@@ -1,0 +1,15 @@
+[submodule "cloud"]
+	path = cloud
+	url = git@github.com:diegonmarcos/cloud.git
+[submodule "cloud-data"]
+	path = cloud-data
+	url = git@github.com:diegonmarcos/cloud-data.git
+[submodule "unix"]
+	path = unix
+	url = git@github.com:diegonmarcos/unix.git
+[submodule "tools"]
+	path = tools
+	url = git@github.com:diegonmarcos/ops-Tooling.git
+[submodule "vault"]
+	path = vault
+	url = git@github.com:diegonmarcos/vault.git
