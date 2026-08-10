@@ -1,15 +1,104 @@
 [submodule "cloud"]
-	path = cloud
+	path = 1_cloud/cloud
 	url = git@github.com:diegonmarcos/cloud.git
+	ignore = all
 [submodule "cloud-data"]
-	path = cloud-data
+	path = 1_cloud/cloud-data
 	url = git@github.com:diegonmarcos/cloud-data.git
+	ignore = all
+[submodule "cloud-data-lfs"]
+	path = 1_cloud/cloud-data-lfs
+	url = git@github.com:diegonmarcos/cloud-data-lfs.git
+	ignore = all
+[submodule "cloud-android"]
+	path = 1_cloud/cloud-android
+	url = git@github.com:diegonmarcos/cloud-android.git
+	ignore = all
 [submodule "unix"]
-	path = unix
+	path = 1_cloud/unix
 	url = git@github.com:diegonmarcos/unix.git
+	ignore = all
 [submodule "tools"]
-	path = tools
-	url = git@github.com:diegonmarcos/ops-Tooling.git
+	path = 1_cloud/tools
+	url = git@github.com:diegonmarcos/tools.git
+	ignore = all
 [submodule "vault"]
-	path = vault
+	path = 1_cloud/vault
 	url = git@github.com:diegonmarcos/vault.git
+	ignore = all
+[submodule "diegonmarcos.github.io"]
+	path = 1_cloud/diegonmarcos.github.io
+	url = git@github.com:diegonmarcos/diegonmarcos.github.io.git
+	ignore = all
+[submodule "front-data"]
+	path = 1_cloud/front-data
+	url = git@github.com:diegonmarcos/front-data.git
+	ignore = all
+[submodule "front-assets-cdn"]
+	path = 1_cloud/front-assets-cdn
+	url = git@github.com:diegonmarcos/front-assets-cdn.git
+	ignore = all
+[submodule "front-asset-cdn"]
+	path = 1_cloud/front-asset-cdn
+	url = git@github.com:diegonmarcos/front-asset-cdn.git
+	ignore = all
+[submodule "front-galaxy-gaia"]
+	path = 1_cloud/front-galaxy-gaia
+	url = git@github.com:diegonmarcos/front-galaxy-gaia.git
+	ignore = all
+[submodule "ml-DataScience"]
+	path = 2_data-science/ml-DataScience
+	url = git@github.com:diegonmarcos/ml-DataScience.git
+	ignore = all
+[submodule "ml-MachineLearning"]
+	path = 2_data-science/ml-MachineLearning
+	url = git@github.com:diegonmarcos/ml-MachineLearning.git
+	ignore = all
+[submodule "ml-Agentic"]
+	path = 2_data-science/ml-Agentic
+	url = git@github.com:diegonmarcos/ml-Agentic.git
+	ignore = all
+[submodule "back-Algo"]
+	path = 3_others/back-Algo
+	url = git@github.com:diegonmarcos/back-Algo.git
+	ignore = all
+[submodule "back-Graphic"]
+	path = 3_others/back-Graphic
+	url = git@github.com:diegonmarcos/back-Graphic.git
+	ignore = all
+[submodule "back-System"]
+	path = 3_others/back-System
+	url = git@github.com:diegonmarcos/back-System.git
+	ignore = all
+[submodule "cyber-Cyberwarfare"]
+	path = 3_others/cyber-Cyberwarfare
+	url = git@github.com:diegonmarcos/cyber-Cyberwarfare.git
+	ignore = all
+[submodule "ops-Mylibs"]
+	path = 3_others/ops-Mylibs
+	url = git@github.com:diegonmarcos/ops-Mylibs.git
+	ignore = all
+[submodule "lecole42"]
+	path = 3_others/lecole42
+	url = git@github.com:diegonmarcos/lecole42.git
+	ignore = all
+[submodule "dev"]
+	path = 3_others/dev
+	url = git@github.com:diegonmarcos/dev.git
+	ignore = all
+[submodule "notes"]
+	path = 3_others/notes
+	url = git@github.com:diegonmarcos/notes.git
+	ignore = all
+[submodule "diegonmarcos"]
+	path = 3_others/diegonmarcos
+	url = git@github.com:diegonmarcos/diegonmarcos.git
+	ignore = all
+[submodule "FairEmail"]
+	path = 3_others/FairEmail
+	url = git@github.com:diegonmarcos/FairEmail.git
+	ignore = all
+[submodule "octocode"]
+	path = 3_others/octocode
+	url = git@github.com:diegonmarcos/octocode.git
+	ignore = all
