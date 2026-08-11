@@ -15,9 +15,10 @@
 #
 #     cloud-master/1_cloud/unix  ->  ~/git/unix
 #
-# A repo you have cloned shows up; one you have not simply is not there. The
-# symlinks are per-machine and therefore gitignored — this repo commits only
-# repos.json and this script.
+# Every repo in the project has a link, committed, whether or not you have
+# cloned it. A link to a repo you do not have dangles — that is the index
+# working, not a fault: `ls 1_cloud/` is the project, and the broken entries
+# are your to-clone list.
 #
 # Why not submodules: a submodule pins a commit and wants --recursive, which
 # here meant cloud-master containing cloud containing cloud-master (an
@@ -41,17 +42,24 @@ _names() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1
 _field() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"));const e=r.repos.find(x=>x.name===process.argv[2]);process.stdout.write(e?String(e[process.argv[3]]??""):"")' "$REGISTRY" "$1" "$2"; }
 _groups() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"));process.stdout.write([...new Set(r.repos.map(x=>x.group))].sort().join(" "))' "$REGISTRY"; }
 
+# The links are RELATIVE and COMMITTED: ../../<name> from <group>/, which is
+# the sibling of cloud-master in whatever directory the repos live in.
+#
+# Absolute would not survive the trip. Git stores a symlink's target verbatim,
+# so a committed /home/diego/git/unix resolves on exactly one machine and
+# dangles everywhere else — the same failure .mcp.json had as a link to
+# /home/diego/.mcp.json. Relative has no such dependency: clone the repos as
+# siblings anywhere ($CLOUD_GIT_BASE, ~/git, /srv, a container) and every link
+# resolves.
+#
+# A link to a repo you have not cloned dangles, deliberately. That IS the
+# index: `ls 1_cloud/` shows every repo in the project, and the broken ones are
+# the ones you do not have yet. `./clone.sh --list` spells it out.
 link_one() {
-    _n="$1"; _g=$(_field "$_n" group); _t="$BASE/$_n"
-    [ -d "$_t" ] || return 1
+    _n="$1"; _g=$(_field "$_n" group)
     mkdir -p "$SCRIPT_DIR/$_g"
-    # The group directory holds nothing but machine-local symlinks, so it
-    # ignores itself. Written here rather than listed in .gitignore so that
-    # adding a group to repos.json needs no second edit — and so a symlink
-    # pointing at someone else's home directory can never be committed.
-    [ -f "$SCRIPT_DIR/$_g/.gitignore" ] || printf '%s\n' '*' > "$SCRIPT_DIR/$_g/.gitignore"
     # -n so relinking an existing link replaces it instead of nesting inside it.
-    ln -sfn "$_t" "$SCRIPT_DIR/$_g/$_n"
+    ln -sfn "../../$_n" "$SCRIPT_DIR/$_g/$_n"
     return 0
 }
 
@@ -96,11 +104,10 @@ case "${1:-}" in
     --link)
         for n in $(_names); do link_one "$n" && printf "  > %-24s linked\n" "$n"; done
         ;;
-    --unlink)
-        for n in $(_names); do
-            g=$(_field "$n" group); [ -L "$SCRIPT_DIR/$g/$n" ] && { rm -f "$SCRIPT_DIR/$g/$n"; printf "  x %-24s unlinked\n" "$n"; }
-            rmdir "$SCRIPT_DIR/$g" 2>/dev/null || true
-        done
+    --relink)
+        # Rewrite every link from the registry. Use after adding or renaming a
+        # repo in repos.json; the result is committed like any other change.
+        for n in $(_names); do link_one "$n" && printf "  > %-24s %s\n" "$n" "$(_field "$n" group)/$n -> ../../$n"; done
         ;;
     --all)
         fail=0

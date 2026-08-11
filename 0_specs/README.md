@@ -27,14 +27,18 @@ cloud-master/1_cloud/unix   ->  ~/git/unix
 cloud-master/2_tools/tools  ->  ~/git/tools
 ```
 
-A repo you have cloned shows up. One you have not simply is not there. Nothing
-is duplicated: the symlink points at the same working tree you develop in, so
-edits through `cloud-master/1_cloud/unix` and through `~/git/unix` are the same
-edits.
+Every repo in the project has a link, **committed**, whether or not you have
+cloned it. `ls 1_cloud/` is the project; the links that dangle are the repos
+you do not have yet, and `./clone.sh --list` spells that out. Nothing is
+duplicated — the link points at the same working tree you develop in, so edits
+through `cloud-master/1_cloud/unix` and through `~/git/unix` are the same edits.
 
-The symlinks are per-machine and are never committed — each group directory
-carries a `.gitignore` of `*`, written by `clone.sh`, so a link pointing at
-someone else's home directory cannot reach the repository.
+The links are **relative** (`../../unix`), and that is what makes committing
+them work. Git stores a symlink target verbatim, so an absolute
+`/home/diego/git/unix` would resolve on one machine and dangle on every other
+— exactly the failure `.mcp.json` had as a link to `/home/diego/.mcp.json`.
+Relative depends on nothing but the layout: clone the repos as siblings
+anywhere — `~/git`, `/srv`, a container — and every link resolves.
 
 ## Why not submodules
 
