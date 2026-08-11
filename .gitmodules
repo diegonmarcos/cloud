@@ -34,65 +34,9 @@
 	path = 1_cloud/cloud-data
 	url = https://github.com/diegonmarcos/cloud-data.git
 	ignore = all
-[submodule "ml-DataScience"]
-	path = 2_data-science/ml-DataScience
-	url = https://github.com/diegonmarcos/ml-DataScience.git
-	ignore = all
-[submodule "ml-MachineLearning"]
-	path = 2_data-science/ml-MachineLearning
-	url = https://github.com/diegonmarcos/ml-MachineLearning.git
-	ignore = all
-[submodule "ml-Agentic"]
-	path = 2_data-science/ml-Agentic
-	url = https://github.com/diegonmarcos/ml-Agentic.git
-	ignore = all
-[submodule "back-Algo"]
-	path = 3_others/back-Algo
-	url = https://github.com/diegonmarcos/back-Algo.git
-	ignore = all
-[submodule "back-Graphic"]
-	path = 3_others/back-Graphic
-	url = https://github.com/diegonmarcos/back-Graphic.git
-	ignore = all
-[submodule "back-System"]
-	path = 3_others/back-System
-	url = https://github.com/diegonmarcos/back-System.git
-	ignore = all
-[submodule "cyber-Cyberwarfare"]
-	path = 3_others/cyber-Cyberwarfare
-	url = https://github.com/diegonmarcos/cyber-Cyberwarfare.git
-	ignore = all
-[submodule "ops-Mylibs"]
-	path = 3_others/ops-Mylibs
-	url = https://github.com/diegonmarcos/ops-Mylibs.git
-	ignore = all
-[submodule "diegonmarcos"]
-	path = 3_others/diegonmarcos
-	url = https://github.com/diegonmarcos/diegonmarcos.git
-	ignore = all
-[submodule "FairEmail"]
-	path = 3_others/FairEmail
-	url = https://github.com/diegonmarcos/FairEmail.git
-	ignore = all
-[submodule "octocode"]
-	path = 3_others/octocode
-	url = https://github.com/diegonmarcos/octocode.git
-	ignore = all
-[submodule "notes"]
-	path = 3_others/notes
-	url = https://github.com/diegonmarcos/notes.git
-	ignore = all
 [submodule "cloud-data-lfs"]
 	path = 1_cloud/cloud-data-lfs
 	url = https://github.com/diegonmarcos/cloud-data-lfs.git
-	ignore = all
-[submodule "dev"]
-	path = 3_others/dev
-	url = https://github.com/diegonmarcos/dev.git
-	ignore = all
-[submodule "lecole42"]
-	path = 3_others/lecole42
-	url = https://github.com/diegonmarcos/lecole42.git
 	ignore = all
 [submodule "front-galaxy-gaia"]
 	path = 1_cloud/front-galaxy-gaia
