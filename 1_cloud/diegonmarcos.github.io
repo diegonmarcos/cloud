@@ -1,1 +1,0 @@
-../../diegonmarcos.github.io
