@@ -1,0 +1,27 @@
+{
+  "_doc": "Registry of every repository in the cloud project. clone.sh reads this and nothing else — adding a repo here is the only edit needed for it to show up in `./clone.sh --list`, be clonable, and get a symlink. Deliberately NOT submodules: a submodule pins a commit, and this is an index of working clones, not a pinned build input.",
+  "_schema": "cloud-repos/v1",
+
+  "base_dir_doc": "Where clones live. Override with $CLOUD_GIT_BASE; otherwise ~/git. Clones are NEVER placed inside this repo — cloud-master holds symlinks pointing out to them, so a repo you have cloned appears here and one you have not simply does not.",
+  "base_dir_default": "~/git",
+
+  "groups": {
+    "1_cloud": "The cloud project — infrastructure, services, data, front-end.",
+    "2_tools": "Shared tooling used by the cloud project."
+  },
+
+  "repos": [
+    { "name": "cloud",                  "group": "1_cloud", "url": "https://github.com/diegonmarcos/cloud.git",                  "private": false, "doc": "Fleet: services, infra, the derive engine (1_cloud-configs)." },
+    { "name": "cloud-data",             "group": "1_cloud", "url": "https://github.com/diegonmarcos/cloud-data.git",             "private": true,  "doc": "Generated fleet config consumed by cloud's services." },
+    { "name": "cloud-data-lfs",         "group": "1_cloud", "url": "https://github.com/diegonmarcos/cloud-data-lfs.git",         "private": true,  "doc": "Large binary artefacts (git-lfs) for cloud-data." },
+    { "name": "cloud-android",          "group": "1_cloud", "url": "https://github.com/diegonmarcos/cloud-android.git",          "private": false, "doc": "Android client." },
+    { "name": "unix",                   "group": "1_cloud", "url": "https://github.com/diegonmarcos/unix.git",                   "private": false, "doc": "Workstation + device configuration, nix flakes, the superapp." },
+    { "name": "vault",                  "group": "1_cloud", "url": "https://github.com/diegonmarcos/vault.git",                  "private": true,  "doc": "Secrets (sops/age). Every credential the fleet uses." },
+    { "name": "diegonmarcos.github.io", "group": "1_cloud", "url": "https://github.com/diegonmarcos/diegonmarcos.github.io.git", "private": false, "doc": "Front-end: the published site and its derive job (1_front-configs)." },
+    { "name": "front-data",             "group": "1_cloud", "url": "https://github.com/diegonmarcos/front-data.git",             "private": false, "doc": "Front-end content and data." },
+    { "name": "front-assets-cdn",       "group": "1_cloud", "url": "https://github.com/diegonmarcos/front-assets-cdn.git",       "private": false, "doc": "Front-end static assets served from the CDN." },
+    { "name": "front-asset-cdn",        "group": "1_cloud", "url": "https://github.com/diegonmarcos/front-asset-cdn.git",        "private": true,  "doc": "Predecessor of front-assets-cdn; kept for history." },
+    { "name": "front-galaxy-gaia",      "group": "1_cloud", "url": "https://github.com/diegonmarcos/front-galaxy-gaia.git",      "private": true,  "doc": "Front-end experiment." },
+    { "name": "tools",                  "group": "2_tools", "url": "https://github.com/diegonmarcos/tools.git",                  "private": false, "doc": "DevOps toolkit — operational scripts and dashboards." }
+  ]
+}
