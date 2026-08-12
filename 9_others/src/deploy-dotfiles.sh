@@ -107,6 +107,8 @@ for rf in $ROOT_FILES; do
     # No-op in the other repos: they have no 1_cloud-configs/, so the guard
     # fails and the committed src/ copy is used unchanged. The module stays
     # portable (see manifest _portability).
+    # sops.yaml lives in its own tier (2_sops/), not under apps/root/.
+    [ "$rf" = "sops.yaml" ] && [ -f "$REPO_ROOT/2_sops/sops.yaml" ] && src="$REPO_ROOT/2_sops/sops.yaml"
     _derived="$REPO_ROOT/1_cloud-configs/dist/$rf"
     if [ -f "$_derived" ] && [ -f "$src" ] && ! cmp -s "$_derived" "$src"; then
         cp -f "$_derived" "$src"
