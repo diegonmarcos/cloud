@@ -23,10 +23,16 @@ Four, and the prefixes are the sort order, not decoration:
 
 | group | | |
 |---|---|---|
-| `1_vault/`        |  1 | Secrets (sops/age). Numbered so it sorts **first** — it is the one repo whose absence breaks the others. |
+| `2_vault/`        |  1 | Secrets (sops/age). Numbered so it sorts ahead of the lettered groups — it is the one repo whose absence breaks the others. |
 | `a_cloud/`        | 11 | The cloud project: infra, services, data, front-end, and the tooling built for it. |
 | `b_data_science/` |  3 | Machine-learning and data-science work. |
 | `y_others/`       | 11 | Coursework, experiments, forks, personal. `y_` so it sorts **last**. |
+
+`2_sops/` sits beside them but is **not** a group: it is a real working
+directory for sops operations — runbooks and cross-repo commands — holding no
+symlinks and no secrets. Encrypted material stays in `2_vault/`, and the ship
+scripts stay in `a_cloud/cloud/1_configs/`; copying either here would recreate
+the drift trap that left vault's `.mcp.json` behind cloud's.
 
 `tools` lives in `a_cloud/` rather than a group of its own: it is the cloud
 project's toolkit, not a separate concern. `vault` is the opposite case — it
