@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════════════════════╗
-# ║ clone.sh — pick which cloud repos to have locally                ║
+# ║ clone.sh — pick which repos to have locally                      ║
 # ║                                                                  ║
 # ║   ./clone.sh                list what exists and what does not   ║
 # ║   ./clone.sh <name>...      clone those, then link them          ║
 # ║   ./clone.sh --all          clone everything in repos.json       ║
-# ║   ./clone.sh --group a_cloud   clone one group                   ║
+# ║   ./clone.sh --group <g>    clone one group                      ║
 # ║   ./clone.sh --link         relink whatever is already cloned    ║
-# ║   ./clone.sh --unlink       remove the symlinks, keep the clones ║
+# ║   ./clone.sh --relink       rewrite every link from the registry ║
 # ╚══════════════════════════════════════════════════════════════════╝
 #
-# cloud-master is an INDEX, not a container. Clones live outside it (in
+# This repo is an INDEX, not a container. Clones live outside it (in
 # $CLOUD_GIT_BASE, default ~/git) and appear here as symlinks:
 #
-#     cloud-master/a_cloud/unix  ->  ~/git/unix
+#     cloud-master/unix          ->  ~/git/unix          (no group)
+#     cloud-master/2_vault/vault ->  ~/git/vault         (grouped)
 #
-# Every repo in the project has a link, committed, whether or not you have
+# Every repo in the registry has a link, committed, whether or not you have
 # cloned it. A link to a repo you do not have dangles — that is the index
-# working, not a fault: `ls a_cloud/` is the project, and the broken entries
-# are your to-clone list.
+# working, not a fault: `ls` is the project, and the broken entries are your
+# to-clone list.
 #
 # Why not submodules: a submodule pins a commit and wants --recursive, which
 # here meant cloud-master containing cloud containing cloud-master (an
 # unterminating recursive clone), private repos breaking init for anyone
-# without those credentials, and 26 repositories dragged along to read one
+# without those credentials, and every repository dragged along to read one
 # file. An index of working clones is a different thing from a pinned build
 # input, and this is the former.
 
@@ -40,10 +41,19 @@ command -v node >/dev/null 2>&1 || { echo "FATAL: node required to read $REGISTR
 # in the fleet, jq is not guaranteed present.
 _names() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"));process.stdout.write(r.repos.map(x=>x.name).join(" "))' "$REGISTRY"; }
 _field() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"));const e=r.repos.find(x=>x.name===process.argv[2]);process.stdout.write(e?String(e[process.argv[3]]??""):"")' "$REGISTRY" "$1" "$2"; }
-_groups() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"));process.stdout.write([...new Set(r.repos.map(x=>x.group))].sort().join(" "))' "$REGISTRY"; }
+# A repo with no group lives at the root and its group name is the empty
+# string, which word-splitting would drop from the loop entirely — so it is
+# emitted as the sentinel "." and translated back at the point of use.
+_groups() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"));process.stdout.write([...new Set(r.repos.map(x=>x.group||"."))].sort().join(" "))' "$REGISTRY"; }
 
-# The links are RELATIVE and COMMITTED: ../../<name> from <group>/, which is
-# the sibling of cloud-master in whatever directory the repos live in.
+# An entry with no `group` links at the ROOT of this repo; one with a group
+# links inside that directory. Depth follows: ../ from the root, ../../ from a
+# group. Getting that wrong does not fail loudly — it produces a link that
+# resolves somewhere plausible and wrong.
+_linkpath() { [ -n "$2" ] && printf '%s/%s/%s' "$SCRIPT_DIR" "$2" "$1" || printf '%s/%s' "$SCRIPT_DIR" "$1"; }
+_linktarget() { [ -n "$2" ] && printf '../../%s' "$1" || printf '../%s' "$1"; }
+
+# The links are RELATIVE and COMMITTED.
 #
 # Absolute would not survive the trip. Git stores a symlink's target verbatim,
 # so a committed /home/diego/git/unix resolves on exactly one machine and
@@ -51,15 +61,12 @@ _groups() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[
 # /home/diego/.mcp.json. Relative has no such dependency: clone the repos as
 # siblings anywhere ($CLOUD_GIT_BASE, ~/git, /srv, a container) and every link
 # resolves.
-#
-# A link to a repo you have not cloned dangles, deliberately. That IS the
-# index: `ls a_cloud/` shows every repo in the project, and the broken ones are
-# the ones you do not have yet. `./clone.sh --list` spells it out.
 link_one() {
     _n="$1"; _g=$(_field "$_n" group)
-    mkdir -p "$SCRIPT_DIR/$_g"
+    _p=$(_linkpath "$_n" "$_g")
+    mkdir -p "$(dirname "$_p")"
     # -n so relinking an existing link replaces it instead of nesting inside it.
-    ln -sfn "../../$_n" "$SCRIPT_DIR/$_g/$_n"
+    ln -sfn "$(_linktarget "$_n" "$_g")" "$_p"
     return 0
 }
 
@@ -83,11 +90,12 @@ clone_one() {
 do_list() {
     printf "base: %s   (override with \$CLOUD_GIT_BASE)\n\n" "$BASE"
     for g in $(_groups); do
-        printf "%s/\n" "$g"
+        [ "$g" = "." ] && g=""
+        [ -n "$g" ] && printf "%s/\n" "$g" || printf "./  (repo root)\n"
         for n in $(_names); do
             [ "$(_field "$n" group)" = "$g" ] || continue
             if [ -d "$BASE/$n/.git" ]; then
-                [ -L "$SCRIPT_DIR/$g/$n" ] && s="cloned + linked" || s="cloned, NOT linked (run --link)"
+                [ -L "$(_linkpath "$n" "$g")" ] && s="cloned + linked" || s="cloned, NOT linked (run --link)"
             else
                 s="not cloned"
                 [ "$(_field "$n" private)" = "true" ] && s="$s (private)"
@@ -105,9 +113,13 @@ case "${1:-}" in
         for n in $(_names); do link_one "$n" && printf "  > %-24s linked\n" "$n"; done
         ;;
     --relink)
-        # Rewrite every link from the registry. Use after adding or renaming a
-        # repo in repos.json; the result is committed like any other change.
-        for n in $(_names); do link_one "$n" && printf "  > %-24s %s\n" "$n" "$(_field "$n" group)/$n -> ../../$n"; done
+        # Rewrite every link from the registry. Use after adding, renaming or
+        # regrouping a repo in repos.json; the result is committed like any
+        # other change.
+        for n in $(_names); do
+            g=$(_field "$n" group)
+            link_one "$n" && printf "  > %-24s %s -> %s\n" "$n" "${g:+$g/}$n" "$(_linktarget "$n" "$g")"
+        done
         ;;
     --all)
         fail=0
@@ -119,7 +131,7 @@ case "${1:-}" in
         for n in $(_names); do [ "$(_field "$n" group)" = "$g" ] && clone_one "$n" || true; done
         ;;
     -h|--help)
-        sed -n '2,12p' "$0" | sed 's/^# \?//'
+        sed -n '2,13p' "$0" | sed 's/^# \?//'
         ;;
     *)
         for n in "$@"; do

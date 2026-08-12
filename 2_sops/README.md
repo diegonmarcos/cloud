@@ -1,8 +1,8 @@
 # 2_sops — where sops work happens
 
-A working directory, not a repo group. The lettered directories
-(`a_cloud/`, `b_data_science/`, `y_others/`) and `2_vault/` hold nothing but
-symlinks to repos; this one holds real files.
+A working directory, not a repo group. The repo symlinks at this repo's root
+and the one under `2_vault/` point out to clones; this directory holds real
+files.
 
 Encrypted material and the tooling that touches it live in their own repos and
 stay there — moving either would break the ship pipeline that consumes them.
@@ -14,10 +14,10 @@ no natural home in one of them.
 
 | what | where | note |
 |---|---|---|
-| age recipients + creation rules | `a_cloud/cloud/.sops.yaml` | one recipient today: `age1u575hx…qxtd7pq` |
+| age recipients + creation rules | `cloud/.sops.yaml` | one recipient today: `age1u575hx…qxtd7pq` |
 | encrypted secrets | `2_vault/vault/A1_Cloud-secrets/*.secrets` | per-service |
 | keys, providers, OCI | `2_vault/vault/A0_keys/` | `keys/`, `providers/`, `oci/` |
-| decrypt during deploy | `a_cloud/cloud/1_cicd/src/scripts/cloud-ship-nix-homemanager-step-secrets-decrypt.sh` | |
+| decrypt during deploy | `cloud/1_cicd/src/scripts/cloud-ship-nix-homemanager-step-secrets-decrypt.sh` | |
 | per-repo secret shipping | `…/cloud-ship-repo-secrets.sh`, `…/cloud-ship-ci-builder-secrets.sh` | |
 | coverage audit | `…/1_cicd/src/ops/audit-credentials-coverage.sh` | |
 
