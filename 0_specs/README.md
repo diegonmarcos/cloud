@@ -12,10 +12,29 @@ It holds no project code. Two files carry the whole thing:
 ```
 ./clone.sh                 # what exists here, what does not
 ./clone.sh unix cloud      # clone those two
-./clone.sh --group 1_cloud # clone a whole group
+./clone.sh --group a_cloud # clone a whole group
 ./clone.sh --all           # everything
 ./clone.sh --link          # relink whatever is already cloned
 ```
+
+## Groups
+
+Four, and the prefixes are the sort order, not decoration:
+
+| group | | |
+|---|---|---|
+| `1_vault/`        |  1 | Secrets (sops/age). Numbered so it sorts **first** — it is the one repo whose absence breaks the others. |
+| `a_cloud/`        | 11 | The cloud project: infra, services, data, front-end, and the tooling built for it. |
+| `b_data_science/` |  3 | Machine-learning and data-science work. |
+| `y_others/`       | 11 | Coursework, experiments, forks, personal. `y_` so it sorts **last**. |
+
+`tools` lives in `a_cloud/` rather than a group of its own: it is the cloud
+project's toolkit, not a separate concern. `vault` is the opposite case — it
+serves everything, so it sits above the lettered groups instead of inside one.
+
+Group names are data. `clone.sh` derives the directory layout from
+`repos.json`, so renaming a group is an edit to that file plus
+`./clone.sh --relink`.
 
 ## How it looks on disk
 
@@ -23,15 +42,15 @@ Clones live OUTSIDE this repo — `$CLOUD_GIT_BASE`, default `~/git` — and
 appear here as symlinks:
 
 ```
-cloud-master/1_cloud/unix   ->  ~/git/unix
-cloud-master/2_tools/tools  ->  ~/git/tools
+cloud-master/a_cloud/unix   ->  ~/git/unix
+cloud-master/a_cloud/tools  ->  ~/git/tools
 ```
 
 Every repo in the project has a link, **committed**, whether or not you have
-cloned it. `ls 1_cloud/` is the project; the links that dangle are the repos
+cloned it. `ls a_cloud/` is the project; the links that dangle are the repos
 you do not have yet, and `./clone.sh --list` spells that out. Nothing is
 duplicated — the link points at the same working tree you develop in, so edits
-through `cloud-master/1_cloud/unix` and through `~/git/unix` are the same edits.
+through `cloud-master/a_cloud/unix` and through `~/git/unix` are the same edits.
 
 The links are **relative** (`../../unix`), and that is what makes committing
 them work. Git stores a symlink target verbatim, so an absolute

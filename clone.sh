@@ -5,7 +5,7 @@
 # ║   ./clone.sh                list what exists and what does not   ║
 # ║   ./clone.sh <name>...      clone those, then link them          ║
 # ║   ./clone.sh --all          clone everything in repos.json       ║
-# ║   ./clone.sh --group 1_cloud   clone one group                   ║
+# ║   ./clone.sh --group a_cloud   clone one group                   ║
 # ║   ./clone.sh --link         relink whatever is already cloned    ║
 # ║   ./clone.sh --unlink       remove the symlinks, keep the clones ║
 # ╚══════════════════════════════════════════════════════════════════╝
@@ -13,11 +13,11 @@
 # cloud-master is an INDEX, not a container. Clones live outside it (in
 # $CLOUD_GIT_BASE, default ~/git) and appear here as symlinks:
 #
-#     cloud-master/1_cloud/unix  ->  ~/git/unix
+#     cloud-master/a_cloud/unix  ->  ~/git/unix
 #
 # Every repo in the project has a link, committed, whether or not you have
 # cloned it. A link to a repo you do not have dangles — that is the index
-# working, not a fault: `ls 1_cloud/` is the project, and the broken entries
+# working, not a fault: `ls a_cloud/` is the project, and the broken entries
 # are your to-clone list.
 #
 # Why not submodules: a submodule pins a commit and wants --recursive, which
@@ -53,7 +53,7 @@ _groups() { node -e 'const r=JSON.parse(require("fs").readFileSync(process.argv[
 # resolves.
 #
 # A link to a repo you have not cloned dangles, deliberately. That IS the
-# index: `ls 1_cloud/` shows every repo in the project, and the broken ones are
+# index: `ls a_cloud/` shows every repo in the project, and the broken ones are
 # the ones you do not have yet. `./clone.sh --list` spells it out.
 link_one() {
     _n="$1"; _g=$(_field "$_n" group)
