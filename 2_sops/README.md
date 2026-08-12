@@ -17,9 +17,9 @@ no natural home in one of them.
 | age recipients + creation rules | `a_cloud/cloud/.sops.yaml` | one recipient today: `age1u575hx…qxtd7pq` |
 | encrypted secrets | `2_vault/vault/A1_Cloud-secrets/*.secrets` | per-service |
 | keys, providers, OCI | `2_vault/vault/A0_keys/` | `keys/`, `providers/`, `oci/` |
-| decrypt during deploy | `a_cloud/cloud/1_configs/src/gha/scripts/cloud-ship-nix-homemanager-step-secrets-decrypt.sh` | |
+| decrypt during deploy | `a_cloud/cloud/1_cicd/src/scripts/cloud-ship-nix-homemanager-step-secrets-decrypt.sh` | |
 | per-repo secret shipping | `…/cloud-ship-repo-secrets.sh`, `…/cloud-ship-ci-builder-secrets.sh` | |
-| coverage audit | `…/1_configs/src/gha/ops/audit-credentials-coverage.sh` | |
+| coverage audit | `…/1_cicd/src/ops/audit-credentials-coverage.sh` | |
 
 Those paths are written as they appear from **this** repo, so they resolve
 through the symlinks once the relevant repos are cloned
@@ -43,5 +43,5 @@ terraform.tfstate.enc   tfstate, encrypted so it can live in a public repo
   public repo; `2_vault/` is the private one, and it stays the only place
   secrets live.
 - **No copies of the ship scripts.** They are consumed by the pipeline from
-  `1_configs/`, and a second copy here would be the same drift trap that let
+  `9_others/`, and a second copy here would be the same drift trap that let
   vault's `.mcp.json` fall behind cloud's.
