@@ -9,15 +9,15 @@
   },
   "repos": [
     {
-      "name": "vault",
+      "name": "cloud-vault",
       "group": "2_vault",
-      "url": "git@github.com:diegonmarcos/vault.git",
+      "url": "git@github.com:diegonmarcos/cloud-vault.git",
       "private": true,
       "doc": "Secrets (sops/age). Every credential the fleet uses."
     },
     {
-      "name": "cloud",
-      "url": "git@github.com:diegonmarcos/cloud.git",
+      "name": "cloud-infra",
+      "url": "git@github.com:diegonmarcos/cloud-infra.git",
       "private": false,
       "doc": "Fleet: services, infra, the derive engine (1_cloud-configs)."
     },
@@ -70,14 +70,14 @@
       "doc": "Front-end experiment."
     },
     {
-      "name": "tools",
-      "url": "git@github.com:diegonmarcos/tools.git",
+      "name": "cloud-mykonsole-dtk",
+      "url": "git@github.com:diegonmarcos/cloud-mykonsole-dtk.git",
       "private": false,
       "doc": "DevOps toolkit — operational scripts and dashboards."
     },
     {
-      "name": "unix",
-      "url": "git@github.com:diegonmarcos/unix.git",
+      "name": "cloud-unix",
+      "url": "git@github.com:diegonmarcos/cloud-unix.git",
       "private": false,
       "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/src/data/claude)."
     }
