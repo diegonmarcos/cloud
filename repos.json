@@ -80,7 +80,13 @@
       "url": "git@github.com:diegonmarcos/cloud-unix.git",
       "private": false,
       "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/src/data/claude)."
+    },
+    {
+      "name": "cloud-my-ai_memory",
+      "url": "git@github.com:diegonmarcos/my-ai_memory.git",
+      "private": true,
+      "doc": "Claude Codes durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
     }
   ],
-  "_root_doc": "The eleven cloud repos have no `group` and sit at the root of this repo. They are the whole of it, so wrapping them in an a_cloud/ directory added a level that distinguished nothing."
+  "_root_doc": "The twelve cloud repos have no `group` and sit at the root of this repo. They are the whole of it, so wrapping them in an a_cloud/ directory added a level that distinguished nothing."
 }
