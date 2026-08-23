@@ -86,6 +86,12 @@
       "url": "git@github.com:diegonmarcos/cloud-my-ai_memory.git",
       "private": true,
       "doc": "Claude Codes durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
+    },
+    {
+      "name": "cloud-notes",
+      "url": "git@github.com:diegonmarcos/cloud-notes.git",
+      "private": true,
+      "doc": "Personal notes vault (Obsidian-style): inbox, tasks, projects, warehouse, workflows."
     }
   ],
   "_root_doc": "The twelve cloud repos have no `group` and sit at the root of this repo. They are the whole of it, so wrapping them in an a_cloud/ directory added a level that distinguished nothing."
