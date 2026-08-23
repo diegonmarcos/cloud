@@ -9,6 +9,9 @@
 
   "alwaysThinkingEnabled": true,
 
+  "_mcp_doc": "Auto-load the project's own .mcp.json servers without a per-server approval prompt. This must live in PROJECT settings (not just ~/.claude), because the fresh clones this file exists for — CI, a container, Claude Code on the web — have no ~/.claude to carry it. .mcp.json is machine-derived from a_solutions/*/build.json .mcp blocks, so every entry is one of the fleet's own servers; blanket-trusting the derived set is what makes them connect at all in a fresh clone. Auth is gated separately by .claude/mcp-auth-headers.sh (Authelia bearer); this key only controls trust/auto-load, not credentials.",
+  "enableAllProjectMcpServers": true,
+
   "env": {
     "_doc": "Only machine-independent values — no paths.",
     "ENABLE_TOOL_SEARCH": "true"
