@@ -76,8 +76,8 @@
       "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/src/data/claude)."
     },
     {
-      "name": "cloud-data-my-ai_memory",
-      "url": "git@github.com:diegonmarcos/cloud-data-my-ai_memory.git",
+      "name": "cloud-data-my-ai-memory",
+      "url": "git@github.com:diegonmarcos/cloud-data-my-ai-memory.git",
       "private": true,
       "doc": "Claude Codes durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
     }
