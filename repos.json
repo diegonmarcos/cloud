@@ -70,12 +70,6 @@
       "doc": "Front-end experiment."
     },
     {
-      "name": "cloud-mykonsole-dtk",
-      "url": "git@github.com:diegonmarcos/cloud-mykonsole-dtk.git",
-      "private": false,
-      "doc": "DevOps toolkit — operational scripts and dashboards."
-    },
-    {
       "name": "cloud-unix",
       "url": "git@github.com:diegonmarcos/cloud-unix.git",
       "private": false,
