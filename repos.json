@@ -22,8 +22,8 @@
       "doc": "Fleet: services, infra, the derive engine (1_cloud-configs)."
     },
     {
-      "name": "cloud-android",
-      "url": "git@github.com:diegonmarcos/cloud-android.git",
+      "name": "cloud-u-android",
+      "url": "git@github.com:diegonmarcos/cloud-u-android.git",
       "private": false,
       "doc": "Android client."
     },
@@ -70,8 +70,8 @@
       "doc": "Front-end experiment."
     },
     {
-      "name": "cloud-unix",
-      "url": "git@github.com:diegonmarcos/cloud-unix.git",
+      "name": "cloud-infra-desktop",
+      "url": "git@github.com:diegonmarcos/cloud-infra-desktop.git",
       "private": false,
       "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/src/data/claude)."
     },
@@ -80,6 +80,18 @@
       "url": "git@github.com:diegonmarcos/cloud-data-my-ai-memory.git",
       "private": true,
       "doc": "Claude Codes durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
+    },
+    {
+      "name": "cloud-u-containers",
+      "url": "git@github.com:diegonmarcos/cloud-u-containers.git",
+      "private": false,
+      "doc": "The containerised services a_solutions ships: one dir per service, each with build.json. Mounted back into cloud-infra as a submodule at a_solutions/ so the ship engine keeps globbing a_solutions/*/build.json."
+    },
+    {
+      "name": "cloud-u-linux",
+      "url": "git@github.com:diegonmarcos/cloud-u-linux.git",
+      "private": false,
+      "doc": "The d* unix apps split out of cloud-unix, now cloud-infra-desktop. The desktop flakes reference them as home-directory paths, never as flake inputs."
     }
   ],
   "_root_doc": "The twelve cloud repos have no `group` and sit at the root of this repo. They are the whole of it, so wrapping them in an a_cloud/ directory added a level that distinguished nothing."
