@@ -91,7 +91,7 @@
       "name": "cloud-u-linux",
       "url": "git@github.com:diegonmarcos/cloud-u-linux.git",
       "private": false,
-      "doc": "The d* unix apps split out of cloud-unix, now cloud-infra-desktop. The desktop flakes reference them as home-directory paths, never as flake inputs."
+      "doc": "The d* unix apps split out of cloud-unix, which was renamed cloud-infra-desktop in the same move. The desktop flakes reference them as home-directory paths, never as flake inputs."
     }
   ],
   "_root_doc": "The twelve cloud repos have no `group` and sit at the root of this repo. They are the whole of it, so wrapping them in an a_cloud/ directory added a level that distinguished nothing."
