@@ -59,7 +59,7 @@ Clones live OUTSIDE this repo — `$CLOUD_GIT_BASE`, default `~/git` — and
 appear here as symlinks:
 
 ```
-cloud-master/unix         ->  ~/git/cloud-unix
+cloud-master/cloud-infra-desktop         ->  ~/git/cloud-infra-desktop
 cloud-master/tools        ->  ~/git/cloud-mykonsole-dtk
 cloud-master/2_vault/vault ->  ~/git/cloud-vault
 ```
@@ -68,10 +68,10 @@ Every repo in the project has a link, **committed**, whether or not you have
 cloned it. `ls` is the project; the links that dangle are the repos you do not
 have yet, and `./clone.sh --list` spells that out. Nothing is duplicated — the
 link points at the same working tree you develop in, so edits through
-`cloud-master/unix` and through `~/git/cloud-unix` are the same edits.
+`cloud-master/cloud-infra-desktop` and through `~/git/cloud-infra-desktop` are the same edits.
 
 The links are **relative**, and that is what makes committing them work. Git
-stores a symlink target verbatim, so an absolute `/home/diego/git/cloud-unix` would
+stores a symlink target verbatim, so an absolute `/home/diego/git/cloud-infra-desktop` would
 resolve on one machine and dangle on every other — exactly the failure
 `.mcp.json` had as a link to `/home/diego/.mcp.json`. Relative depends on
 nothing but the layout: clone the repos as siblings anywhere — `~/git`, `/srv`,
