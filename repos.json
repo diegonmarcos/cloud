@@ -79,7 +79,7 @@
       "name": "cloud-data-my-ai-memory",
       "url": "git@github.com:diegonmarcos/cloud-data-my-ai-memory.git",
       "private": true,
-      "doc": "Claude Codes durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
+      "doc": "Claude Code's durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
     },
     {
       "name": "cloud-u-containers",
