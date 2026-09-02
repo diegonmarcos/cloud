@@ -40,10 +40,10 @@
       "doc": "Large binary artefacts (git-lfs) for cloud-data."
     },
     {
-      "name": "front",
+      "name": "front-diegonmarcos",
       "url": "git@github.com:diegonmarcos/diegonmarcos.github.io.git",
       "private": false,
-      "doc": "Front-end: the published site and its derive job (1_front-configs). Cloned as 'front', not after its repo name — 112 files across unix and cloud reference ~/git/front, and it matches its siblings front-data/front-assets-cdn."
+      "doc": "Front-end: the published site and its derive job (1_front-configs). Cloned as 'front-diegonmarcos', not after its repo name (diegonmarcos.github.io) — every front member is front-<thing>, and the bare 'front' now belongs to the project master, exactly as 'cloud' does for a_cloud."
     },
     {
       "name": "front-unity",
@@ -80,6 +80,12 @@
       "url": "git@github.com:diegonmarcos/cloud-data-my-ai-memory.git",
       "private": true,
       "doc": "Claude Code's durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
+    },
+    {
+      "name": "cloud-notes",
+      "url": "git@github.com:diegonmarcos/cloud-notes.git",
+      "private": true,
+      "doc": "Personal notes (Obsidian vault)."
     },
     {
       "name": "cloud-u-containers",
