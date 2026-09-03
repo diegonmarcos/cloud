@@ -73,7 +73,7 @@
       "name": "cloud-infra-desktop",
       "url": "git@github.com:diegonmarcos/cloud-infra-desktop.git",
       "private": false,
-      "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/src/data/claude)."
+      "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/data/claude)."
     },
     {
       "name": "cloud-data-my-ai-memory",
