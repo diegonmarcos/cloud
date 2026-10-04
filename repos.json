@@ -1,0 +1,104 @@
+{
+  "_doc": "Registry of the cloud project. clone.sh reads this and nothing else. A SUBSET of repo_master/repos.json, which indexes every repository this account owns — the entries here must match it field for field. Deliberately NOT submodules: a submodule pins a commit, and this is an index of working clones, not a pinned build input.",
+  "_schema": "cloud-repos/v1",
+  "base_dir_doc": "Where clones live. Override with $CLOUD_GIT_BASE; otherwise ~/git. Clones are NEVER placed inside this repo — cloud-master holds relative symlinks pointing out to them, committed, so `ls` is the project and a dangling link is just a repo you have not cloned yet. An entry with no `group` links at the repo ROOT (../<name>); 2_vault is a config tier, not a repo group, and its one entry links at 2_vault/vault (../../vault).",
+  "base_dir_default": "~/git",
+  "_visibility_doc": "`private` mirrors GitHub visibility as of 2026-08-11 and only drives the \"(private)\" hint in `--list` plus a clearer message when a clone fails for lack of credentials. It grants nothing.",
+  "groups": {
+    "2_vault": "Secrets (sops/age) — every credential the fleet uses. Numbered so it sorts ahead of the lettered groups: it is the one repo whose absence breaks the others."
+  },
+  "repos": [
+    {
+      "name": "cloud-vault",
+      "group": "2_vault",
+      "url": "git@github.com:diegonmarcos/cloud-vault.git",
+      "private": true,
+      "doc": "Secrets (sops/age). Every credential the fleet uses."
+    },
+    {
+      "name": "cloud-infra",
+      "url": "git@github.com:diegonmarcos/cloud-infra.git",
+      "private": false,
+      "doc": "Fleet: services, infra, the derive engine (1_cloud-configs)."
+    },
+    {
+      "name": "cloud-u-android",
+      "url": "git@github.com:diegonmarcos/cloud-u-android.git",
+      "private": false,
+      "doc": "Android client."
+    },
+    {
+      "name": "cloud-data",
+      "url": "git@github.com:diegonmarcos/cloud-data.git",
+      "private": true,
+      "doc": "Generated fleet config consumed by cloud's services."
+    },
+    {
+      "name": "cloud-data-lfs",
+      "url": "git@github.com:diegonmarcos/cloud-data-lfs.git",
+      "private": true,
+      "doc": "Large binary artefacts (git-lfs) for cloud-data."
+    },
+    {
+      "name": "front-diegonmarcos",
+      "url": "git@github.com:diegonmarcos/diegonmarcos.github.io.git",
+      "private": false,
+      "doc": "Front-end: the published site and its derive job (1_front-configs). Cloned as 'front-diegonmarcos', not after its repo name (diegonmarcos.github.io) — every front member is front-<thing>, and the bare 'front' now belongs to the project master, exactly as 'cloud' does for a_cloud."
+    },
+    {
+      "name": "front-unity",
+      "url": "git@github.com:diegonmarcos/front-unity.git",
+      "private": true,
+      "doc": "Unity asset pipeline (unity-asset-vm: upkg2gltf, fetch-and-convert) plus its assets. Was front-asset-cdn, the predecessor of front-assets-cdn; renamed 2026-08-18 to match what it actually holds - the CDN itself is front-assets-cdn."
+    },
+    {
+      "name": "front-assets-cdn",
+      "url": "git@github.com:diegonmarcos/front-assets-cdn.git",
+      "private": false,
+      "doc": "Front-end static assets served from the CDN."
+    },
+    {
+      "name": "front-data",
+      "url": "git@github.com:diegonmarcos/front-data.git",
+      "private": false,
+      "doc": "Front-end content and data."
+    },
+    {
+      "name": "front-galaxy-gaia",
+      "url": "git@github.com:diegonmarcos/front-galaxy-gaia.git",
+      "private": true,
+      "doc": "Front-end experiment."
+    },
+    {
+      "name": "cloud-infra-desktop",
+      "url": "git@github.com:diegonmarcos/cloud-infra-desktop.git",
+      "private": false,
+      "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/data/claude)."
+    },
+    {
+      "name": "cloud-data-my-ai-memory",
+      "url": "git@github.com:diegonmarcos/cloud-data-my-ai-memory.git",
+      "private": true,
+      "doc": "Claude Code's durable state and the source it runs from. ~/.claude symlinks in, not out: a_sessions/<instance>/ holds transcripts, file-history, shell-snapshots and history.jsonl; b_projects/ holds MEMORY.md and memory-entries; a_commits/ snapshots every commit object of every repo here."
+    },
+    {
+      "name": "cloud-notes",
+      "url": "git@github.com:diegonmarcos/cloud-notes.git",
+      "private": true,
+      "doc": "Personal notes (Obsidian vault)."
+    },
+    {
+      "name": "cloud-u-containers",
+      "url": "git@github.com:diegonmarcos/cloud-u-containers.git",
+      "private": false,
+      "doc": "The containerised services a_solutions ships: one dir per service, each with build.json. Mounted back into cloud-infra as a submodule at a_solutions/ so the ship engine keeps globbing a_solutions/*/build.json."
+    },
+    {
+      "name": "cloud-u-linux",
+      "url": "git@github.com:diegonmarcos/cloud-u-linux.git",
+      "private": false,
+      "doc": "The d* unix apps split out of cloud-unix, which was renamed cloud-infra-desktop in the same move. The desktop flakes reference them as home-directory paths, never as flake inputs."
+    }
+  ],
+  "_root_doc": "The twelve cloud repos have no `group` and sit at the root of this repo. They are the whole of it, so wrapping them in an a_cloud/ directory added a level that distinguished nothing."
+}
