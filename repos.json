@@ -9,9 +9,9 @@
   },
   "repos": [
     {
-      "name": "cloud-vault",
+      "name": "cloud-me_vault",
       "group": "2_vault",
-      "url": "git@github.com:diegonmarcos/cloud-vault.git",
+      "url": "git@github.com:diegonmarcos/cloud-me_vault.git",
       "private": true,
       "doc": "Secrets (sops/age). Every credential the fleet uses."
     },
