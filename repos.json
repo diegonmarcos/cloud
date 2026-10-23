@@ -16,8 +16,8 @@
       "doc": "Secrets (sops/age). Every credential the fleet uses."
     },
     {
-      "name": "cloud-infra",
-      "url": "git@github.com:diegonmarcos/cloud-infra.git",
+      "name": "cloud-t-infra",
+      "url": "git@github.com:diegonmarcos/cloud-t-infra.git",
       "private": false,
       "doc": "Fleet: services, infra, the derive engine (1_cloud-configs)."
     },
