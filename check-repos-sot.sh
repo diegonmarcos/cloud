@@ -6,7 +6,7 @@
 # a checkout of git-repos-master next to this one (../git-repos-master) is used when present.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
-BASE="${REPOS_SOT_BASE:-https://raw.githubusercontent.com/diegonmarcos/git-repos-master/claude/new-session-vb0job}"
+BASE="${REPOS_SOT_BASE:-https://raw.githubusercontent.com/diegonmarcos/git-repos-master/main}"
 T="$(mktemp -d)"; trap 'rm -rf "$T"' EXIT
 if [ -f "$HERE/../git-repos-master/repos-sot.js" ]; then
   cp "$HERE/../git-repos-master/repos-sot.js" "$HERE/../git-repos-master/repos.json" "$T/"
