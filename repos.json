@@ -46,8 +46,8 @@
       "doc": "Front-end: the published site and its derive job (1_front-configs). Cloned as 'front-diegonmarcos', not after its repo name (diegonmarcos.github.io) — every front member is front-<thing>, and the bare 'front' now belongs to the project master, exactly as 'cloud' does for a_cloud."
     },
     {
-      "name": "front-unity",
-      "url": "git@github.com:diegonmarcos/front-unity.git",
+      "name": "CG-unity",
+      "url": "git@github.com:diegonmarcos/CG-unity.git",
       "private": true,
       "doc": "Unity asset pipeline (unity-asset-vm: upkg2gltf, fetch-and-convert) plus its assets. Was front-asset-cdn, the predecessor of front-assets-cdn; renamed 2026-08-18 to match what it actually holds - the CDN itself is front-assets-cdn."
     },
@@ -64,8 +64,8 @@
       "doc": "Front-end content and data."
     },
     {
-      "name": "front-galaxy-gaia",
-      "url": "git@github.com:diegonmarcos/front-galaxy-gaia.git",
+      "name": "CG-galaxy-gaia",
+      "url": "git@github.com:diegonmarcos/CG-galaxy-gaia.git",
       "private": true,
       "doc": "Front-end experiment."
     },
