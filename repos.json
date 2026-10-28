@@ -1,11 +1,81 @@
 {
-  "_doc": "Registry of the cloud project. clone.sh reads this and nothing else. A SUBSET of repo_master/repos.json, which indexes every repository this account owns — the entries here must match it field for field. Deliberately NOT submodules: a submodule pins a commit, and this is an index of working clones, not a pinned build input.",
+  "_doc": "THE CLOUD FAMILY FILE. The full hierarchy (groups 2_vault and a_cloud plus the cloud-* repos of b_front, every repo with all its fields, parts, renames) of the cloud repos and nothing else. Home: the cloud hub repo (cloud/repos.json); cloud-t-infra keeps a byte copy at 1_cloud-configs/src/inputs/repos.sot.json. A SUBSET of git-repos-master/repos.json, which stays the superset for the whole account; entries must match it field for field (node repos-sot.js check-subset, run from git-repos-master). Regenerate from the registry, never hand-edit (#1224).",
   "_schema": "cloud-repos/v1",
-  "base_dir_doc": "Where clones live. Override with $CLOUD_GIT_BASE; otherwise ~/git. Clones are NEVER placed inside this repo — cloud-master holds relative symlinks pointing out to them, committed, so `ls` is the project and a dangling link is just a repo you have not cloned yet. An entry with no `group` links at the repo ROOT (../<name>); 2_vault is a config tier, not a repo group, and its one entry links at 2_vault/vault (../../vault).",
-  "base_dir_default": "~/git",
-  "_visibility_doc": "`private` mirrors GitHub visibility as of 2026-08-11 and only drives the \"(private)\" hint in `--list` plus a clearer message when a clone fails for lack of credentials. It grants nothing.",
+  "_status_doc": "`status` is optional. Absent = the repo exists and is cloned/linked as usual. `pending_creation` = declared on purpose, but the GitHub repo is NOT created yet: every farmer (clone.sh, the cloud-drive seed, the libs:repos mirror, the fleet dotfiles guard) must SKIP it - no clone, no symlink, no seed - and the guard fails if a pending entry is treated as live. Flip it by deleting the field in the same commit that creates the repo. `parts` (optional) lists named sub-trees that live INSIDE the same repo, declared as placeholders so farmers and docs know the planned layout before any file moves; a part is never a repo of its own and is never cloned or linked.",
+  "_renames_doc": "`renames` records an old name -> new name for things that are not (or not only) repos, so a path that still says the old name is findable and a guard can flag it. `kind: repo` = a repository rename (the entry also carries `renamed_from`); `kind: app-folder` = a folder/app inside a repo. Farmers never create the old name.",
+  "renames": [
+    {
+      "from": "front-assets-cdn",
+      "to": "cloud_db_assets-cdn",
+      "kind": "repo",
+      "since": "2026-10-27",
+      "ticket": "#1217",
+      "doc": "GitHub repo renamed."
+    },
+    {
+      "from": "front-profiles",
+      "to": "cloud-me-profiles",
+      "kind": "repo",
+      "since": "2026-10-25",
+      "ticket": "#1196",
+      "doc": "GitHub repo renamed; the Pages overlay list and the registry follow."
+    },
+    {
+      "from": "front-mydata",
+      "to": "cloud-me-others",
+      "kind": "repo",
+      "since": "2026-10-25",
+      "ticket": "#1196",
+      "doc": "GitHub repo renamed; the Pages overlay list and the registry follow."
+    },
+    {
+      "from": "front-suite",
+      "to": "cloud-webapps-2",
+      "kind": "repo",
+      "since": "2026-10-25",
+      "ticket": "#1196",
+      "doc": "GitHub repo renamed; the Pages overlay list and the registry follow."
+    },
+    {
+      "from": "cloud-mobile",
+      "to": "cloud-superapp",
+      "kind": "app-folder",
+      "since": "2026-10-21",
+      "ticket": "#1073",
+      "doc": "The SuperApp web replica folder (front/a-Portals/cloud-mobile) is now cloud-superapp, matching the APK folder aa_cloud-superapp. The deployed page URL https://diegonmarcos.github.io/cloud-mobile/ is a SITE path owned by #1062/#1072 and moves with that deploy split, not here."
+    }
+  ],
+  "unregistered_ok": [
+    {
+      "name": "git-repos-master",
+      "reason": "this index itself (see _self_doc)"
+    },
+    {
+      "name": "cloud-me",
+      "reason": "on GitHub but not indexed here as of 2026-10-21 (#1073); owner to decide: register or archive"
+    },
+    {
+      "name": "cloud-me_data-private",
+      "reason": "on GitHub but not indexed here as of 2026-10-21 (#1073); owner to decide: register or archive"
+    },
+    {
+      "name": "z-archived_My-ai-memory",
+      "reason": "on GitHub but not indexed here as of 2026-10-21 (#1073); owner to decide: register or archive"
+    },
+    {
+      "name": "z-archived_c3-infra-plugin",
+      "reason": "archived; the c3-infra plugin source of truth moved to cloud-u-linux da_my-ai/data/claude/cloud-marketplace/c3-infra"
+    }
+  ],
+  "_unregistered_doc": "GitHub repos (by GitHub name) that exist but deliberately have no entry. cloud-infra's repos-sot tester fails when the fetched GitHub inventory holds a repo that is neither registered above nor listed here, and when a pending_creation repo already shows up in the inventory (flip its status).",
+  "base_dir_doc": "Where clones live. Override with $CLOUD_GIT_BASE; otherwise ~/cloud-shared-store/git — every repo lives in that ONE place, on every machine. Clones are NEVER placed inside this repo — repo_master holds relative symlinks (../../<name> from a group directory) pointing out to them, committed, so `ls <group>/` is the inventory and a dangling link is just a repo you have not cloned yet.",
+  "shared_store_dir": "cloud-shared-store",
+  "base_dir_default": "~/cloud-shared-store/git",
+  "_path_doc": "`path` is where the clone actually sits under base_dir; it defaults to `name`. No entry sets it since 2026-10-23: the d_lecole repos were renamed lecole-42_* and now sit at the root of base_dir, so the old ~/cloud-shared-store/git/lecole-42/ folder is only a stale machine-local directory (owner step: move or re-clone).",
   "groups": {
-    "2_vault": "Secrets (sops/age) — every credential the fleet uses. Numbered so it sorts ahead of the lettered groups: it is the one repo whose absence breaks the others."
+    "2_vault": "Secrets (sops/age) — every credential the fleet uses. Numbered so it sorts ahead of the lettered groups: it is the one repo whose absence breaks the others.",
+    "a_cloud": "The cloud project — infrastructure, services, data, devices and the tooling built for them. Its own project master is `cloud`, which indexes this same set minus the account-level repos.",
+    "b_front": "The front-end — the published site, its content, its assets and its experiments. Its project master is `ffront`. Kept out of a_cloud because it ships on its own cadence to its own hosts; folding it in was what made a_cloud mean nothing."
   },
   "repos": [
     {
@@ -13,70 +83,100 @@
       "group": "2_vault",
       "url": "git@github.com:diegonmarcos/cloud-me_vault.git",
       "private": true,
+      "renamed_from": [
+        "cloud-vault"
+      ],
       "doc": "Secrets (sops/age). Every credential the fleet uses."
     },
     {
+      "name": "cloud",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud.git",
+      "private": false,
+      "doc": "Project master for the cloud project: a repos.json subset of this file plus committed symlinks. Had a symlink here but no entry until 2026-08-20 — the drift that made `ls a_cloud/` disagree with `--list`."
+    },
+    {
       "name": "cloud-t-infra",
+      "group": "a_cloud",
       "url": "git@github.com:diegonmarcos/cloud-t-infra.git",
       "private": false,
-      "doc": "Fleet: services, infra, the derive engine (1_cloud-configs)."
+      "renamed_from": [
+        "cloud-infra"
+      ],
+      "doc": "Fleet: services, infra, the derive engine (1_cloud-configs). Renamed from cloud-infra 2026-10-23 (#1136)."
+    },
+    {
+      "name": "cloud-u-desktop",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-u-desktop.git",
+      "private": false,
+      "renamed_from": [
+        "cloud-infra-desktop"
+      ],
+      "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/src/data/claude)."
     },
     {
       "name": "cloud-u-android",
+      "group": "a_cloud",
       "url": "git@github.com:diegonmarcos/cloud-u-android.git",
       "private": false,
       "doc": "Android client."
     },
     {
+      "name": "cloud-u-containers",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-u-containers.git",
+      "private": false,
+      "doc": "The containerised services a_solutions ships: one dir per service, each with build.json. Mounted back into cloud-infra as a submodule at a_solutions/ so the ship engine keeps globbing a_solutions/*/build.json."
+    },
+    {
+      "name": "cloud-u-containers_cgc",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-u-containers_cgc.git",
+      "private": false,
+      "doc": "The PUBLIC cgc code-knowledge-graph pipeline (pub surface: octocode indexes of the public repos -> GHCR -> cloud-cgc-pub-mcp), split out of cloud-u-containers / cloud-infra; split-outs are named <parent>_<name>. Holds the pipeline code and the reusable cgc-db-index.yml the private half calls by sha."
+    },
+    {
+      "name": "cloud-me_cgc",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-me_cgc.git",
+      "private": true,
+      "doc": "The PRIVATE half of the cgc pipeline (pvt surface: the private repos -> cloud-cgc-pvt-mcp). A thin orchestrator rendered from cloud-u-containers_cgc at a pinned sha, so private-repo runs and logs stay private. Was cloud-u-containers_cgc-pvt; renamed 2026-10-10 into the private cloud-me family (split-outs are named <parent>_<name>; every cloud-u-* repo is public)."
+    },
+    {
+      "name": "cloud-me_configs",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-me_configs.git",
+      "private": true,
+      "doc": "Private configs (cloud-me family). Added 2026-10-15: it existed but was missing here, so clone.sh and --sync skipped it. (/home/user/cloud-vault is just a second clone of cloud-me_vault, not a separate repo.)"
+    },
+    {
+      "name": "cloud-u-linux",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-u-linux.git",
+      "private": false,
+      "doc": "The d* unix apps split out of cloud-unix, which was renamed cloud-infra-desktop (now cloud-u-desktop) in the same move. The desktop flakes reference them as home-directory paths, never as flake inputs."
+    },
+    {
       "name": "cloud-me-data-pvt",
+      "group": "a_cloud",
       "url": "git@github.com:diegonmarcos/cloud-me-data-pvt.git",
       "private": true,
+      "renamed_from": [
+        "cloud-data"
+      ],
       "doc": "Generated fleet config consumed by cloud's services."
     },
     {
       "name": "cloud-data-lfs",
+      "group": "a_cloud",
       "url": "git@github.com:diegonmarcos/cloud-data-lfs.git",
       "private": true,
-      "doc": "Large binary artefacts (git-lfs) for cloud-data."
-    },
-    {
-      "name": "front-diegonmarcos",
-      "url": "git@github.com:diegonmarcos/diegonmarcos.github.io.git",
-      "private": false,
-      "doc": "Front-end: the published site and its derive job (1_front-configs). Cloned as 'front-diegonmarcos', not after its repo name (diegonmarcos.github.io) — every front member is front-<thing>, and the bare 'front' now belongs to the project master, exactly as 'cloud' does for a_cloud."
-    },
-    {
-      "name": "CG-unity",
-      "url": "git@github.com:diegonmarcos/CG-unity.git",
-      "private": true,
-      "doc": "Unity asset pipeline (unity-asset-vm: upkg2gltf, fetch-and-convert) plus its assets. Was front-asset-cdn, the predecessor of front-assets-cdn; renamed 2026-08-18 to match what it actually holds - the CDN itself is front-assets-cdn."
-    },
-    {
-      "name": "front-assets-cdn",
-      "url": "git@github.com:diegonmarcos/front-assets-cdn.git",
-      "private": false,
-      "doc": "Front-end static assets served from the CDN."
-    },
-    {
-      "name": "z-archived_front-data",
-      "url": "git@github.com:diegonmarcos/z-archived_front-data.git",
-      "private": false,
-      "doc": "Front-end content and data."
-    },
-    {
-      "name": "CG-galaxy-gaia",
-      "url": "git@github.com:diegonmarcos/CG-galaxy-gaia.git",
-      "private": true,
-      "doc": "Front-end experiment."
-    },
-    {
-      "name": "cloud-u-desktop",
-      "url": "git@github.com:diegonmarcos/cloud-u-desktop.git",
-      "private": false,
-      "doc": "Workstation + device configuration, nix flakes, the superapp. Holds the Claude SoT (da_my-ai/data/claude)."
+      "doc": "Large binary artefacts (git-lfs) for cloud-me-data-pvt (was cloud-data)."
     },
     {
       "name": "cloud-me-my-ai",
+      "group": "a_cloud",
       "url": "git@github.com:diegonmarcos/cloud-me-my-ai.git",
       "private": true,
       "renamed_from": [
@@ -86,34 +186,81 @@
     },
     {
       "name": "cloud-me-notes",
+      "group": "a_cloud",
       "url": "git@github.com:diegonmarcos/cloud-me-notes.git",
       "private": true,
+      "renamed_from": [
+        "cloud-notes"
+      ],
       "doc": "Personal notes (Obsidian vault)."
     },
     {
-      "name": "cloud-u-containers",
-      "url": "git@github.com:diegonmarcos/cloud-u-containers.git",
+      "name": "cloud-webapps",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-webapps.git",
       "private": false,
-      "doc": "The containerised services a_solutions ships: one dir per service, each with build.json. Mounted back into cloud-infra as a submodule at a_solutions/ so the ship engine keeps globbing a_solutions/*/build.json."
+      "doc": "The Cloud web apps: one independent site per Cloud APK (cloud-mail, cloud-drive, ...) sharing one generated top nav. Moved out of front-diegonmarcos (c__Cloud). Created 2026-10-21; tree imported from front-diegonmarcos/cloud-webapps."
     },
     {
-      "name": "cloud-u-linux",
-      "url": "git@github.com:diegonmarcos/cloud-u-linux.git",
-      "private": false,
-      "doc": "The d* unix apps split out of cloud-unix, which was renamed cloud-infra-desktop in the same move. The desktop flakes reference them as home-directory paths, never as flake inputs."
-    },
-    {
-      "name": "cloud-u-containers_cgc",
-      "url": "git@github.com:diegonmarcos/cloud-u-containers_cgc.git",
-      "private": false,
-      "doc": "The PUBLIC cgc code-knowledge-graph pipeline (pub surface: octocode indexes of the public repos -> GHCR -> cloud-cgc-pub-mcp), split out of cloud-u-containers / cloud-infra; split-outs are named <parent>_<name>. Holds the pipeline code and the reusable cgc-db-index.yml the private half calls by sha."
-    },
-    {
-      "name": "cloud-me_cgc",
-      "url": "git@github.com:diegonmarcos/cloud-me_cgc.git",
+      "name": "cloud-me-containers",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-me-containers.git",
       "private": true,
-      "doc": "The PRIVATE half of the cgc pipeline (pvt surface: the private repos -> cloud-cgc-pvt-mcp). A thin orchestrator rendered from cloud-u-containers_cgc at a pinned sha, so private-repo runs and logs stay private. Was cloud-u-containers_cgc-pvt; renamed 2026-10-10 into the private cloud-me family (split-outs are named <parent>_<name>; every cloud-u-* repo is public)."
+      "doc": "The owner's own (cloud-me) containers. Created 2026-10-21 (private)."
+    },
+    {
+      "name": "cloud_db_infra-ops-obsv_configs-sync",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud_db_infra-ops-obsv_configs-sync.git",
+      "private": false,
+      "doc": "Configs-sync engine data repo: the consolidated fleet config SoT (from 1_cloud-configs) served by c3-infra-api/mcp. Created 2026-10-25 (#1197 programme); public."
+    },
+    {
+      "name": "cloud-me_data-pub",
+      "group": "a_cloud",
+      "url": "git@github.com:diegonmarcos/cloud-me_data-pub.git",
+      "private": false,
+      "doc": "The owner's PUBLIC data (the public half of cloud-me). Added 2026-10-21 (#1073): cloud-drive seeded it but this registry did not list it."
+    },
+    {
+      "name": "cloud-me-others",
+      "group": "b_front",
+      "url": "git@github.com:diegonmarcos/cloud-me-others.git",
+      "private": false,
+      "renamed_from": [
+        "front-mydata"
+      ],
+      "doc": "Sources of the b_MyData group, split from front-projects (#1072); snapshot copy, paths mirror the original layout."
+    },
+    {
+      "name": "cloud-me-profiles",
+      "group": "b_front",
+      "url": "git@github.com:diegonmarcos/cloud-me-profiles.git",
+      "private": false,
+      "renamed_from": [
+        "front-profiles"
+      ],
+      "doc": "Sources of the b_Profiles group (and Lnktree, moved in from front-linktree, #1217), split from front-projects (#1072); snapshot copy, paths mirror the original layout."
+    },
+    {
+      "name": "cloud-webapps-2",
+      "group": "b_front",
+      "url": "git@github.com:diegonmarcos/cloud-webapps-2.git",
+      "private": false,
+      "renamed_from": [
+        "front-suite"
+      ],
+      "doc": "Sources of the c_Suite group (now also movies, music, myfeed, #1204), split from front-projects (#1072); snapshot copy, paths mirror the original layout."
+    },
+    {
+      "name": "cloud_db_assets-cdn",
+      "group": "b_front",
+      "url": "git@github.com:diegonmarcos/cloud_db_assets-cdn.git",
+      "private": false,
+      "renamed_from": [
+        "front-assets-cdn"
+      ],
+      "doc": "Static assets served from the CDN. Renamed from front-assets-cdn 2026-10-27 (#1217)."
     }
-  ],
-  "_root_doc": "The twelve cloud repos have no `group` and sit at the root of this repo. They are the whole of it, so wrapping them in an a_cloud/ directory added a level that distinguished nothing."
+  ]
 }
