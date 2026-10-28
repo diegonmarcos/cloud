@@ -1,0 +1,3 @@
+[submodule "0_hub/_git-repos-master"]
+	path = 0_hub/_git-repos-master
+	url = https://github.com/diegonmarcos/_git-repos-master.git
