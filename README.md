@@ -1,6 +1,6 @@
-# cloud-master
+# cloudy-___
 
-The index of the cloud project — twelve repositories, with a `clone.sh` that
+The index of the cloudy project (formerly cloud; the cloud-me-* family keeps its name) — twelve repositories, with a `clone.sh` that
 pulls down whichever ones you want on this machine.
 
 ```
