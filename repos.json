@@ -442,9 +442,9 @@
       "doc": "Configs-sync engine data repo: the consolidated fleet config SoT (from 1_cloud-configs) served by c3-infra-api/mcp. Created 2026-10-25 (#1197 programme); public."
     },
     {
-      "name": "cloud-me-pvt-legacy",
+      "name": "z-archived_cloud-me-pvt-legacy",
       "group": "a_cloud",
-      "url": "git@github.com:diegonmarcos/cloud-me-pvt-legacy.git",
+      "url": "git@github.com:diegonmarcos/z-archived_cloud-me-pvt-legacy.git",
       "private": true,
       "renamed_from": [
         "cloud-me"
