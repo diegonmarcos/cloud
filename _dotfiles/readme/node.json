@@ -5,6 +5,7 @@
   "label": "cloudy-___",
   "code": "1.1.0",
   "kind": "hub",
+  "variant": "hub",
   "description": "The cloudy project: fleet infrastructure, services, devices, data and docs.",
   "visibility": "public",
   "url": "https://github.com/diegonmarcos/cloudy-___",
