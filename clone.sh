@@ -8,6 +8,7 @@
 # ║   ./clone.sh --group <g>    clone one group                      ║
 # ║   ./clone.sh --link         relink whatever is already cloned    ║
 # ║   ./clone.sh --relink       rewrite every link from the registry ║
+# ║   ./clone.sh --full         full history (or CLONE_DEPTH=0)      ║
 # ╚══════════════════════════════════════════════════════════════════╝
 #
 # This repo is an INDEX, not a container. Clones live outside it (in
@@ -36,6 +37,27 @@ BASE="${CLOUD_GIT_BASE:-$HOME/git}"
 
 [ -f "$REGISTRY" ] || { echo "FATAL: $REGISTRY missing" >&2; exit 1; }
 command -v node >/dev/null 2>&1 || { echo "FATAL: node required to read $REGISTRY" >&2; exit 1; }
+
+# ── clone depth ─────────────────────────────────────────────────────────────
+# Default is SHALLOW: git clone --depth 1 --shallow-submodules (fast, small
+# disk; one clone per repo, never a second "full" copy). Full history is the
+# opt-out: pass --full anywhere, or CLONE_DEPTH=0, or CLONE_DEPTH=<n> for a
+# deeper shallow clone. Later: git -C <clone> fetch --unshallow.
+# Submodules follow the same depth (--shallow-submodules; for an existing
+# clone: git submodule update --init --depth 1).
+CLONE_DEPTH="${CLONE_DEPTH:-1}"
+_args=""
+for _a in "$@"; do
+    [ "$_a" = "--full" ] && { CLONE_DEPTH=0; continue; }
+    _args="$_args $_a"
+done
+# shellcheck disable=SC2086
+set -- $_args
+case "$CLONE_DEPTH" in
+    0) CLONE_OPTS="" ;;
+    *[!0-9]*|"") echo "FATAL: CLONE_DEPTH must be a number (0 = full)" >&2; exit 1 ;;
+    *) CLONE_OPTS="--depth $CLONE_DEPTH --shallow-submodules" ;;
+esac
 
 # Registry readers. node, not jq: node is already required by every build.sh
 # in the fleet, jq is not guaranteed present.
@@ -77,7 +99,7 @@ clone_one() {
     else
         printf "  + %-24s cloning -> %s\n" "$_n" "$_t"
         mkdir -p "$BASE"
-        if ! git clone "$_u" "$_t"; then
+        if ! git clone $CLONE_OPTS "$_u" "$_t"; then
             printf "  ! %-24s CLONE FAILED" "$_n"
             [ "$(_field "$_n" private)" = "true" ] && printf " (private — check your credentials)"
             printf "\n"
@@ -131,7 +153,7 @@ case "${1:-}" in
         for n in $(_names); do [ "$(_field "$n" group)" = "$g" ] && clone_one "$n" || true; done
         ;;
     -h|--help)
-        sed -n '2,13p' "$0" | sed 's/^# \?//'
+        sed -n '2,14p' "$0" | sed 's/^# \?//'
         ;;
     *)
         for n in "$@"; do
