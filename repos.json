@@ -624,9 +624,9 @@
       "doc": "The Cloud web apps: one independent site per Cloud APK (cloud-mail, cloud-drive, ...) sharing one generated top nav. Moved out of front-diegonmarcos (c__Cloud). Created 2026-10-21; tree imported from front-diegonmarcos/cloud-webapps."
     },
     {
-      "name": "cloud-me-pvt-containers",
+      "name": "z-archived_cloud-me-pvt-containers",
       "group": "a_cloud",
-      "url": "git@github.com:diegonmarcos/cloud-me-pvt-containers.git",
+      "url": "git@github.com:diegonmarcos/z-archived_cloud-me-pvt-containers.git",
       "private": true,
       "renamed_from": [
         "cloud-me-containers"

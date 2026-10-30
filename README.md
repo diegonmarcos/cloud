@@ -44,7 +44,7 @@ repos sit at the root, and why this is not submodules.
 | `1.1.3.1.2` | [cloudy-u-containers_cgc](https://github.com/diegonmarcos/cloudy-u-containers_cgc) | 🌐 public | Public half of the cgc code knowledge graph pipeline: octocode indexes of the public repos -> GHCR -> cloud-cgc-pub-mcp. Split out of cloud-u-containers / cloud-infra. |
 | `1.1.3.2.1` | [cloudy-u-desktop](https://github.com/diegonmarcos/cloudy-u-desktop) | 🌐 public | penguins does have wings, but those are divers and swimmers! |
 | `1.1.3.2.2` | [cloudy-u-linux](https://github.com/diegonmarcos/cloudy-u-linux) | 🌐 public | Linux desktop applications (split from cloud-unix d*/da*/db* trees) |
-| `1.1.4.1` | [cloudy-h-webapps](https://github.com/diegonmarcos/cloudy-h-webapps) | 🌐 public | Cloud web apps: per-app independent sites with a shared top nav |
+| `1.1.4.1` | [cloudy-h-webapps](https://github.com/diegonmarcos/cloudy-h-webapps) | 🌐 public | Cloud web apps: the SuperApp + fleet mimic (/cloud-webapps/) and the C3 console (/cloudy-c3/), one SvelteKit workspace |
 | `1.1.4.2` | [cloudy-h-webapps-2](https://github.com/diegonmarcos/cloudy-h-webapps-2) | 🌐 public | Front group c_Suite (split from front-projects, #1072) |
 
 ## Usage
