@@ -1,6 +1,6 @@
 {
   "schema": "readme-node/v1",
-  "generated_by": "_git-repos-master readme-render.js nodeData() from projects-repos.json; DO NOT EDIT (node repos-sot.js sync-readmes)",
+  "generated_by": "_git-repos-master 0_registry/readme-render.js nodeData() from projects-repos.json; DO NOT EDIT (node 0_registry/repos-sot.js sync-readmes)",
   "name": "cloudy-___",
   "label": "cloudy-___",
   "code": "1.1.0",
@@ -49,23 +49,7 @@
       "description": "what happens if a Penguin learns  how to surf?"
     },
     {
-      "code": "1.1.2.2",
-      "name": "cloudy-u-containers",
-      "url": "https://github.com/diegonmarcos/cloudy-u-containers",
-      "visibility": "public",
-      "kind": "repo",
-      "description": "Container service definitions for the cloud fleet (split from cloud-infra/a_solutions)"
-    },
-    {
-      "code": "1.1.2.3",
-      "name": "cloudy-u-containers_cgc",
-      "url": "https://github.com/diegonmarcos/cloudy-u-containers_cgc",
-      "visibility": "public",
-      "kind": "repo",
-      "description": "Public half of the cgc code knowledge graph pipeline: octocode indexes of the public repos -> GHCR -> cloud-cgc-pub-mcp. Split out of cloud-u-containers / cloud-infra."
-    },
-    {
-      "code": "1.1.3.1",
+      "code": "1.1.2.2.1",
       "name": "cloudy_db_assets-cdn",
       "url": "https://github.com/diegonmarcos/cloudy_db_assets-cdn",
       "visibility": "public",
@@ -73,7 +57,7 @@
       "description": ""
     },
     {
-      "code": "1.1.3.2",
+      "code": "1.1.2.2.2",
       "name": "cloudy_db_infra-ops-obsv_configs-sync",
       "url": "https://github.com/diegonmarcos/cloudy_db_infra-ops-obsv_configs-sync",
       "visibility": "public",
@@ -81,7 +65,7 @@
       "description": "Configs-sync engine data repo: consolidated fleet config SoT (from 1_cloud-configs) served by c3-infra-api/mcp"
     },
     {
-      "code": "1.1.3.3",
+      "code": "1.1.2.2.3",
       "name": "cloudy_db_LFS",
       "url": "https://github.com/diegonmarcos/cloudy_db_LFS",
       "visibility": "private",
@@ -89,15 +73,7 @@
       "description": "Cloud data storage using Git LFS"
     },
     {
-      "code": "1.1.4.1",
-      "name": "cloudy-u-desktop",
-      "url": "https://github.com/diegonmarcos/cloudy-u-desktop",
-      "visibility": "public",
-      "kind": "repo",
-      "description": "penguins does have wings, but those are divers and swimmers!"
-    },
-    {
-      "code": "1.1.5.1",
+      "code": "1.1.2.3.1",
       "name": "cloudy-a-docs",
       "url": "https://github.com/diegonmarcos/cloudy-a-docs",
       "visibility": "private",
@@ -105,7 +81,31 @@
       "description": "Cloud docs: RoadMap, Backlog (p-backlog) and Architecture, split out of cloud-me-my-ai"
     },
     {
-      "code": "1.1.6.1",
+      "code": "1.1.3.1.1",
+      "name": "cloudy-u-containers",
+      "url": "https://github.com/diegonmarcos/cloudy-u-containers",
+      "visibility": "public",
+      "kind": "repo",
+      "description": "Container service definitions for the cloud fleet (split from cloud-infra/a_solutions)"
+    },
+    {
+      "code": "1.1.3.1.2",
+      "name": "cloudy-u-containers_cgc",
+      "url": "https://github.com/diegonmarcos/cloudy-u-containers_cgc",
+      "visibility": "public",
+      "kind": "repo",
+      "description": "Public half of the cgc code knowledge graph pipeline: octocode indexes of the public repos -> GHCR -> cloud-cgc-pub-mcp. Split out of cloud-u-containers / cloud-infra."
+    },
+    {
+      "code": "1.1.3.2.1",
+      "name": "cloudy-u-desktop",
+      "url": "https://github.com/diegonmarcos/cloudy-u-desktop",
+      "visibility": "public",
+      "kind": "repo",
+      "description": "penguins does have wings, but those are divers and swimmers!"
+    },
+    {
+      "code": "1.1.3.2.2",
       "name": "cloudy-u-linux",
       "url": "https://github.com/diegonmarcos/cloudy-u-linux",
       "visibility": "public",
@@ -113,7 +113,7 @@
       "description": "Linux desktop applications (split from cloud-unix d*/da*/db* trees)"
     },
     {
-      "code": "1.1.7.1",
+      "code": "1.1.4.1",
       "name": "cloudy-h-webapps",
       "url": "https://github.com/diegonmarcos/cloudy-h-webapps",
       "visibility": "public",
@@ -121,7 +121,7 @@
       "description": "Cloud web apps: per-app independent sites with a shared top nav"
     },
     {
-      "code": "1.1.7.2",
+      "code": "1.1.4.2",
       "name": "cloudy-h-webapps-2",
       "url": "https://github.com/diegonmarcos/cloudy-h-webapps-2",
       "visibility": "public",
